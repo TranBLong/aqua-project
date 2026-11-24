@@ -1,0 +1,39 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "ponds": {
+      ".indexOn": ["ownerId"],
+      "$pondId": {
+        ".read": "data.child('ownerId').val() === auth.uid"
+      }
+    },
+
+    "pondsLatest": {
+      "$pondId": {
+        ".read": "root.child('ponds').child($pondId).child('ownerId').val() === auth.uid"
+      }
+    },
+
+    "sensorHistory": {
+      "$pondId": {
+        ".indexOn": ["ts"],
+        ".read": "root.child('ponds').child($pondId).child('ownerId').val() === auth.uid"
+      }
+    },
+
+    "alerts": {
+      "$pondId": {
+        ".indexOn": ["ts"],
+        ".read": "root.child('ponds').child($pondId).child('ownerId').val() === auth.uid"
+      }
+    },
+
+    "users": {
+      "$uid": {
+        ".read": "$uid === auth.uid"
+      }
+    }
+  }
+}
